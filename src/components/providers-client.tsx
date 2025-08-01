@@ -24,8 +24,8 @@ const ProvidersClient: FunctionComponent<PropsWithChildren> = ({ children }) => 
         >
             {status === "authenticated" && (
                 <SidebarProvider>
+                    {split_pathname.length <= 2 && <AppSidebar />}
                     <div className="flex h-screen w-full overflow-hidden">
-                        {split_pathname.length <= 2 && <AppSidebar />}
                         <div className="flex flex-col w-full">
                             <NavBar
                                 pathname={split_pathname}

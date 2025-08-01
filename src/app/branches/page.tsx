@@ -4,7 +4,7 @@ import useBranch from "@/hooks/use-branch";
 import {BranchListResponseSchema} from "@/types/schema";
 import BranchIndex from "@/components/layouts/branch-index";
 import {useState} from "react";
-import {branchDataTableAtom, gte_page_count} from "@/lib/utils";
+import {branchDataTableAtom, format_paginated, gte_page_count} from "@/lib/utils";
 import {useAtom} from "jotai";
 
 const Page:NextPage = () => {
@@ -15,7 +15,8 @@ const Page:NextPage = () => {
         queryName:"branch-list",
         enable: true,
         filters:{
-            search
+            search,
+            page:format_paginated(pagination.pageIndex)
         }
     })
 

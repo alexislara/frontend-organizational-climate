@@ -5,14 +5,14 @@ import DataTable from "@/components/data-table";
 import columnsFunc from "@/components/layouts/data-table-columns/branch";
 import {useRouter} from "next/navigation";
 import HeaderIndex from "@/components/header-index";
-import {PaginationState} from "@tanstack/table-core";
+import {OnChangeFn, PaginationState} from "@tanstack/table-core";
 
 interface BranchIndexProps {
     data:BranchList[]
     setSearch: (value: string) => void;
     search: string;
     pageCount: number;
-    setPagination:(value: PaginationState) => void;
+    setPagination:OnChangeFn<PaginationState>;
     pagination: PaginationState;
 }
 
@@ -29,8 +29,8 @@ const BranchIndex:FunctionComponent<BranchIndexProps> = ({
     return (
         <div>
             <HeaderIndex
-                text_button={"Register rental"}
-                text_route={"/rentals/create"}
+                text_button={"Registro de sucursal"}
+                text_route={"/branches/create"}
                 search_state={(value) => setSearch(value)}
                 search={search}
             />

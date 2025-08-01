@@ -11,7 +11,7 @@ class AtomsDataTable {
     constructor({
         pagination
     }:AtomsDataTableProps) {
-        this.pagination = atom(pagination);
+        this.pagination = atom<PaginationState>(pagination);
     }
 
 }

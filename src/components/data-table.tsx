@@ -29,13 +29,13 @@ import {
     PaginationNext,
     PaginationPrevious
 } from "./ui/pagination"
-import {PaginationState} from "@tanstack/table-core"
+import {PaginationState, OnChangeFn} from "@tanstack/table-core"
 
 interface DataTableProps<T> {
     columns: ColumnDef<T>[];
     data: T[];
     pagination: PaginationState;
-    setPagination:(value: PaginationState) => void;
+    setPagination:OnChangeFn<PaginationState>;
     pageCount: number;
 }
 
@@ -52,6 +52,7 @@ const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination }: 
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
+        onPaginationChange: setPagination, //update the pagination state when internal APIs mutate the pagination state
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
@@ -64,7 +65,7 @@ const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination }: 
             rowSelection,
             pagination,
         },
-        manualPagination: false,
+        manualPagination: true,
     })
 
     const currentPage = table.getState().pagination.pageIndex
@@ -72,9 +73,9 @@ const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination }: 
 
     return (
         <div className="w-full mt-2 rounded-md">
-            <div className="rounded-md border bg-card overflow-x-auto max-h-[calc(100vh-170px)]">
+            <div className="rounded-md border bg-card overflow-x-auto max-h-[calc(100vh-190px)]">
                 <Table>
-                    <TableHeader className="sticky top-0 bg-card border z-10">
+                    <TableHeader className="sticky top-0 bg-card border-b-2 z-10">
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => (
@@ -109,7 +110,7 @@ const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination }: 
                             <TableRow>
                                 <TableCell
                                     colSpan={columns.length}
-                                    className="h-24 text-center"
+                                    className="h-[calc(100vh-232px)] text-center"
                                 >
                                     No results.
                                 </TableCell>
@@ -119,7 +120,7 @@ const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination }: 
                 </Table>
             </div>
 
-            <div className="flex items-center justify-center mt-[6px]">
+            <div className="flex items-center justify-center border rounded-md p-2 bg-card my-2">
                 <Pagination>
                     <PaginationContent>
                         <PaginationItem>

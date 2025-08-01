@@ -22,6 +22,10 @@ export const formatDate = (date: string) => {
   return new Intl.DateTimeFormat("es-ES", options).format(set_format);
 }
 
+export const format_paginated = (page: number) => {
+  return page !== 0 ? String(page): "1"
+}
+
 export const gte_page_count = (page: number) => {
   return Math.ceil((page ?? 1) / 20)
 }
@@ -38,7 +42,7 @@ export const fetchBranch = new ApiFetch<BranchResponse, HTTPRequestError<string[
 
 export const branchDataTableAtom = new AtomsDataTable({
   pagination:{
-    pageIndex:0,
+    pageIndex:1,
     pageSize:20
   }
 });
