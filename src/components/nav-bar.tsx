@@ -12,11 +12,11 @@ const NavBar:FunctionComponent<NavBarProps> = ({pathname}) => {
     const {back} = useRouter()
 
     return (
-        <nav className="flex justify-between items-center border-b w-full px-2 p-1 bg-black ">
+        <nav className="flex justify-between items-center border-b w-full px-2 p-3 dark:bg-transparent">
             <div className="flex items-center">
                 <div className="border-r mr-2">
                     {pathname.length <= 2 && (
-                        <SidebarTrigger className={"mr-1"}/>
+                        <SidebarTrigger className={"mr-1 hover:bg-accent/20"}/>
                     )}
                     {pathname.length > 2 && (
                         <Button

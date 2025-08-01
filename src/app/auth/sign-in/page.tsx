@@ -11,7 +11,7 @@ const Page = () => {
                 <div
                     className="absolute inset-0 bg-cover bg-center"
                 >
-                    <div className="absolute inset-0 bg-blue-700/30 backdrop-blur-md flex flex-col justify-between px-6 lg:px-20 py-10 lg:py-20">
+                    <div className="absolute inset-0 bg-[#000075] backdrop-blur-md flex flex-col justify-between px-6 lg:px-20 py-10 lg:py-20">
                         <div>
                             <div className="mb-6 lg:mb-10">
                                 <div className="bg-white p-2 w-14 h-14 lg:w-16 lg:h-16 rounded-xl shadow-xl transition-all duration-200 flex items-center justify-center">

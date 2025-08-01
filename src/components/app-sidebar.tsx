@@ -30,32 +30,35 @@ import {
     DropdownMenuTrigger
 } from "./ui/dropdown-menu";
 import {useRouter} from "next/navigation";
+import {signOut} from "next-auth/react";
+import ButtonTheme from "@/components/button-theme";
+import {LOGOUT_URL} from "@/lib/utils";
 
 // Menu items.
 const items = [
     {
         title: "Dashboard",
-        url: "#",
+        url: "/",
         icon: Home,
     },
     {
         title: "Sucursales",
-        url: "#",
+        url: "/branches",
         icon: Sheet,
     },
     {
         title: "Usuarios",
-        url: "#",
+        url: "/users",
         icon: UsersRound,
     },
     {
         title: "Planes de acción",
-        url: "#",
+        url: "/action_plans",
         icon: NotepadText,
     },
     {
         title: "Evidencias",
-        url: "#",
+        url: "/evidences",
         icon: FileArchive,
     },
 ]
@@ -124,7 +127,7 @@ const AppSidebar = () => {
                                 <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
                                 <DropdownMenuGroup>
                                     <DropdownMenuItem asChild={true}>
-                                        {/*<ButtonTheme />*/}
+                                        <ButtonTheme />
                                     </DropdownMenuItem>
                                 </DropdownMenuGroup>
                                 <DropdownMenuSeparator />
@@ -151,8 +154,8 @@ const AppSidebar = () => {
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem onClick={async () => {
-                                    // await signOut();
-                                    // window.location.assign(LOGOUT_URL)
+                                    await signOut();
+                                    window.location.assign(LOGOUT_URL)
                                 }}>
                                     Cerrar sesión
                                     <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

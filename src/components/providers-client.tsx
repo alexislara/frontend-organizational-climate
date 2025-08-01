@@ -26,11 +26,11 @@ const ProvidersClient: FunctionComponent<PropsWithChildren> = ({ children }) => 
                 <SidebarProvider>
                     <div className="flex h-screen w-full overflow-hidden">
                         {split_pathname.length <= 2 && <AppSidebar />}
-                        <div className="flex flex-col flex-1 min-h-screen">
+                        <div className="flex flex-col w-full">
                             <NavBar
                                 pathname={split_pathname}
                             />
-                            <main className="flex-1 overflow-auto p-3">
+                            <main className="flex flex-col m-2">
                                 {children}
                             </main>
                         </div>
@@ -38,7 +38,6 @@ const ProvidersClient: FunctionComponent<PropsWithChildren> = ({ children }) => 
                     <Toaster />
                 </SidebarProvider>
             )}
-
             {status === "unauthenticated" && (
                 <main className="grid grid-cols-1 w-full">
                     {children}

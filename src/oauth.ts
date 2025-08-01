@@ -51,12 +51,13 @@ const authOptions: AuthOptions = {
             wellKnown: `${process.env.NEXT_PUBLIC_SERVER_ECO_URL}/o/.well-known/openid-configuration/`,
             authorization: {
                 params: {
-                    scope: "openid profile email permissions",
+                    // url: `${process.env.NEXT_PUBLIC_SERVER_ECO_URL}/o/authorize/`,
+                    scope: "openid profile email permissions read write",
                     grant_type: "authorization_code",
                 }
             },
             token: {
-                url: `${process.env.NEXT_PUBLIC_SERVER_ECO_URL}/o/token`,
+                url: `${process.env.NEXT_PUBLIC_SERVER_ECO_URL}/o/token/`,
                 params: {
                     grant_type: "authorization_code",
                 },
@@ -64,7 +65,7 @@ const authOptions: AuthOptions = {
             idToken: true,
             checks: ["pkce"],
             clientId: process.env.NEXT_PUBLIC_ECO_CLIENT_ID,
-            clientSecret: process.env.NEXT_PUBLIC_ECO_CLIENT_SECRET,
+            clientSecret: process.env.NEXT_PUBLIC_ECO_SECRET,
             httpOptions: {
                 timeout: 3000 * 4, // 12 seg
             },
