@@ -2,8 +2,10 @@
 import {Input} from "@/components/ui/input";
 import {Plus, Search} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import {useRouter} from "next/navigation";
-import {FunctionComponent} from "react";
+import {usePathname, useRouter} from "next/navigation";
+import {FunctionComponent, useEffect, useMemo} from "react";
+import {useAtom} from "jotai/index";
+import {open_filters} from "@/global-atoms";
 
 interface HeaderProps {
     text_button: string;
@@ -19,6 +21,9 @@ const HeaderIndex:FunctionComponent<HeaderProps> = ({
     search_state,
 }: HeaderProps) => {
     const {push} = useRouter()
+    const [openFilter, setOpenFilter] = useAtom(open_filters)
+    const pathname = usePathname();
+    
 
     return (
         <nav className={"flex items-center bg-card border rounded-[10px] p-2 justify-between"}>
@@ -35,14 +40,24 @@ const HeaderIndex:FunctionComponent<HeaderProps> = ({
                     className={"absolute ml-2"}
                 />
             </div>
-            <Button
-                variant={"outline"}
-                size={"sm"}
-                onClick={() => push(text_route ?? "/")}
-            >
-                <Plus strokeWidth={2.25} className={"ml-[-6px]"} />
-                <span>{text_button ?? "sin titulo"}</span>
-            </Button>
+            <div className={"space-x-2"}>
+                <Button
+                    variant={"outline"}
+                    size={"sm"}
+                    onClick={() => setOpenFilter(!openFilter)}
+                >
+                    <Plus strokeWidth={2.25} className={"ml-[-6px]"} />
+                    <span>Filtros</span>
+                </Button>
+                <Button
+                    variant={"outline"}
+                    size={"sm"}
+                    onClick={() => push(text_route ?? "/")}
+                >
+                    <Plus strokeWidth={2.25} className={"ml-[-6px]"} />
+                    <span>{text_button ?? "sin titulo"}</span>
+                </Button>
+            </div>
         </nav>
     )
 }

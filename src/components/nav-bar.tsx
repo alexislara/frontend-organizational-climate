@@ -22,7 +22,7 @@ const NavBar:FunctionComponent<NavBarProps> = ({pathname}) => {
                         <Button
                             size={"icon"}
                             variant={"ghost"}
-                            className={"h-6 w-6"}
+                            className={"h-7 w-7 mr-2"}
                             onClick={() => back()}
                         >
                             <ChevronLeft />

@@ -33,6 +33,8 @@ import {useRouter} from "next/navigation";
 import {signOut} from "next-auth/react";
 import ButtonTheme from "@/components/button-theme";
 import {LOGOUT_URL} from "@/lib/utils";
+import {useAtom} from "jotai";
+import {open_filters} from "@/global-atoms";
 
 // Menu items.
 const items = [
@@ -65,11 +67,8 @@ const items = [
 
 const AppSidebar = () => {
     const {push} = useRouter()
-    const { open } = useSidebar()
-    // const {data} = useProfile.useHook({
-    //     func_data:fetchProfile.Get,
-    //     id:user_id
-    // })
+    const {open} = useSidebar()
+    const [openFilter, setOpenFilter] = useAtom(open_filters)
 
     return (
         <Sidebar collapsible={"icon"}>
@@ -94,7 +93,12 @@ const AppSidebar = () => {
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <Link href={item.url}>
+                                        <Link
+                                            href={item.url}
+                                            onClick={() => {
+                                                setOpenFilter(false)
+                                            }}
+                                        >
                                             <item.icon />
                                             <span>{item.title}</span>
                                         </Link>

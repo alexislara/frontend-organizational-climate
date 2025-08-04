@@ -24,7 +24,7 @@ const columnsFunc = ({push}:RentalColumnsProps) => {
         {
             id: "select",
             header: ({ table }) => (
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center ">
                     <Checkbox
                         checked={
                             table.getIsAllPageRowsSelected() ||
@@ -71,8 +71,8 @@ const columnsFunc = ({push}:RentalColumnsProps) => {
                 const data = row.original.name
 
                 return (
-                    <div className="capitalize text-balance">
-                        <p>{data}</p>
+                    <div className="w-full">
+                        <p className={"capitalize text-balance w-40"}>{data}</p>
                     </div>
 
                 )
@@ -86,7 +86,7 @@ const columnsFunc = ({push}:RentalColumnsProps) => {
 
                 return (
                     <div className="capitalize text-balance">
-                        <p>{data}</p>
+                        <p className={"font-medium text-balance w-48"}>{data}</p>
                     </div>
 
                 )

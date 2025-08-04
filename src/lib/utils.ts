@@ -23,7 +23,7 @@ export const formatDate = (date: string) => {
 }
 
 export const format_paginated = (page: number) => {
-  return page !== 0 ? String(page): "1"
+  return page !== 0 ? String(page + 1): ""
 }
 
 export const gte_page_count = (page: number) => {

@@ -73,9 +73,9 @@ const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination }: 
 
     return (
         <div className="w-full mt-2 rounded-md">
-            <div className="rounded-md border bg-card overflow-x-auto max-h-[calc(100vh-190px)]">
+            <div className="rounded-md border overflow-x-auto h-[calc(100vh-190px)]">
                 <Table>
-                    <TableHeader className="sticky top-0 bg-card border-b-2 z-10">
+                    <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => (
