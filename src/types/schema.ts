@@ -20,6 +20,14 @@ export const BranchListSchema = z.object({
     modified: z.string()
 })
 
+export const PathnameFiltersSchema = z.union([
+    z.literal(""),
+    z.literal("branches"),
+    z.literal("users"),
+    z.literal("action-plans"),
+    z.literal("evidences")
+])
+
 // type list response
 export const BranchListResponseSchema = PaginatedResponseSchema(BranchListSchema)
 

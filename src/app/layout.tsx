@@ -24,7 +24,7 @@ const RootLayout:NextPage<Readonly<PropsWithChildren>> = ({
 children
 }) => {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

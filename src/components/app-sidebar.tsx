@@ -34,7 +34,8 @@ import {signOut} from "next-auth/react";
 import ButtonTheme from "@/components/button-theme";
 import {LOGOUT_URL} from "@/lib/utils";
 import {useAtom} from "jotai";
-import {open_filters} from "@/global-atoms";
+import {open_filters} from "@/lib/atoms/global-atoms";
+import {FunctionComponent} from "react";
 
 // Menu items.
 const items = [
@@ -55,7 +56,7 @@ const items = [
     },
     {
         title: "Planes de acción",
-        url: "/action_plans",
+        url: "/action-plans",
         icon: NotepadText,
     },
     {
@@ -65,7 +66,7 @@ const items = [
     },
 ]
 
-const AppSidebar = () => {
+const AppSidebar:FunctionComponent = () => {
     const {push} = useRouter()
     const {open} = useSidebar()
     const [openFilter, setOpenFilter] = useAtom(open_filters)
@@ -80,7 +81,7 @@ const AppSidebar = () => {
                         width={50}
                         alt={""}
                     />
-                    <h1>
+                    <h1 className={"font-bold capitalize"}>
                         CLIMA ORGANIZACIONAL
                     </h1>
                 </SidebarMenuButton>

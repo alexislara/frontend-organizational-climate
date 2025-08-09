@@ -3,7 +3,8 @@ import { twMerge } from "tailwind-merge"
 import ApiFetch from "@/lib/api-fetch";
 import {BranchResponse} from "@/types/types-schemas";
 import {HTTPRequestError} from "@/types/interfaces";
-import AtomsDataTable from "@/lib/hook";
+import AtomsDataTable from "@/lib/atoms/atoms-data-table";
+import AtomFilters from "@/lib/atoms/atoms-filters";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -26,8 +27,8 @@ export const format_paginated = (page: number) => {
   return page !== 0 ? String(page + 1): ""
 }
 
-export const gte_page_count = (page: number) => {
-  return Math.ceil((page ?? 1) / 20)
+export const gte_page_count = (page_count: number, page_size:number) => {
+  return Math.ceil((page_count ?? 1) / page_size)
 }
 
 export const LOGOUT_URL = `${process.env.NEXT_PUBLIC_SERVER_ECO_URL ?? "http://localhost:8000"}/o/logout/?next=${process.env.NEXT_PUBLIC_URL ?? "http://localhost:3000"}/auth/sign-in`
@@ -42,7 +43,12 @@ export const fetchBranch = new ApiFetch<BranchResponse, HTTPRequestError<string[
 
 export const branchDataTableAtom = new AtomsDataTable({
   pagination:{
-    pageIndex:1,
+    pageIndex:0,
     pageSize:20
   }
 });
+
+export const branchesFilters = new AtomFilters({})
+export const usersFilters = new AtomFilters({})
+export const actionPlansFilters = new AtomFilters({})
+export const evidencesFilters = new AtomFilters({})

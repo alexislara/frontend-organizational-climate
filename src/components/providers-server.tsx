@@ -11,7 +11,7 @@ const ProvidersServer:FunctionComponent<PropsWithChildren> = ({ children })  => 
         <SessionProvider>
             <QueryClientProvider client={queryClient}>
                 {children}
-                <ReactQueryDevtools initialIsOpen={false} />
+                {/*<ReactQueryDevtools initialIsOpen={false} />*/}
             </QueryClientProvider>
         </SessionProvider>
     )

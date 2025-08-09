@@ -1,11 +1,12 @@
 "use client"
 import {Input} from "@/components/ui/input";
-import {Plus, Search} from "lucide-react";
+import {ListFilter, Plus, Search} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {usePathname, useRouter} from "next/navigation";
 import {FunctionComponent, useEffect, useMemo} from "react";
 import {useAtom} from "jotai/index";
-import {open_filters} from "@/global-atoms";
+import {open_filters} from "@/lib/atoms/global-atoms";
+import SheetFilters from "@/components/sheet-filters";
 
 interface HeaderProps {
     text_button: string;
@@ -21,7 +22,6 @@ const HeaderIndex:FunctionComponent<HeaderProps> = ({
     search_state,
 }: HeaderProps) => {
     const {push} = useRouter()
-    const [openFilter, setOpenFilter] = useAtom(open_filters)
     const pathname = usePathname();
     
 
@@ -41,14 +41,17 @@ const HeaderIndex:FunctionComponent<HeaderProps> = ({
                 />
             </div>
             <div className={"space-x-2"}>
-                <Button
-                    variant={"outline"}
-                    size={"sm"}
-                    onClick={() => setOpenFilter(!openFilter)}
-                >
-                    <Plus strokeWidth={2.25} className={"ml-[-6px]"} />
-                    <span>Filtros</span>
-                </Button>
+                {/*<Button*/}
+                {/*    variant={"outline"}*/}
+                {/*    size={"sm"}*/}
+                {/*    onClick={() => setOpenFilter(!openFilter)}*/}
+                {/*>*/}
+                {/*    <ListFilter strokeWidth={2.25} className={"ml-[-6px]"} />*/}
+                {/*    <span>Filtros</span>*/}
+                {/*</Button>*/}
+                <SheetFilters>
+
+                </SheetFilters>
                 <Button
                     variant={"outline"}
                     size={"sm"}

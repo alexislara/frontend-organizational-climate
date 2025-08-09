@@ -10,7 +10,8 @@ import NavBar from "@/components/nav-bar";
 import { usePathname } from "next/navigation";
 import FilterSideBar from "@/components/filter-sidebar";
 import {useAtom} from "jotai";
-import {open_filters} from "@/global-atoms";
+import {open_filters} from "@/lib/atoms/global-atoms";
+import {PathnameFiltersSchema} from "@/types/schema";
 
 const ProvidersClient: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const [openFilter, setOpenFilter] = useAtom(open_filters)
@@ -30,15 +31,13 @@ const ProvidersClient: FunctionComponent<PropsWithChildren> = ({ children }) => 
                 <SidebarProvider>
                     {split_pathname.length <= 2 && <AppSidebar />}
                     <div className="flex h-screen w-full overflow-hidden">
-                            <div className="flex flex-col w-full">
-                                <NavBar
-                                    pathname={split_pathname}
-                                />
-                                <div className={`${openFilter ? "blur-xs bg-card/40 z-10 fixed h-full w-full": ""}`} />
-                                <main className="flex flex-col m-2 ">
-                                    {children}
-                                </main>
-                            </div>
+                        <div className="flex flex-col w-full">
+                            <NavBar pathname={split_pathname} />
+                            <div className={`${openFilter ? "blur-xs bg-card/40 z-10 fixed h-full w-full": ""}`} />
+                            <main className="flex flex-col m-2 ">
+                                {children}
+                            </main>
+                        </div>
                         <SidebarProvider
                             defaultOpen={true}
                             onOpenChange={setOpenFilter}
@@ -48,6 +47,7 @@ const ProvidersClient: FunctionComponent<PropsWithChildren> = ({ children }) => 
                             <FilterSideBar
                                 open={openFilter}
                                 onClose={setOpenFilter}
+                                pathname={PathnameFiltersSchema.parse(split_pathname[1])}
                             />
                         </SidebarProvider>
                     </div>

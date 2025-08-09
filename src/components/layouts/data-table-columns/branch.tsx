@@ -137,7 +137,7 @@ const columnsFunc = ({push}:RentalColumnsProps) => {
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem
-                                onClick={() => push(`branchs/${data.id}`)}
+                                onClick={() => push(`branches/${data.id}`)}
                             >
                                 Editar sucursal
                             </DropdownMenuItem>

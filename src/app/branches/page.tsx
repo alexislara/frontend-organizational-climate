@@ -4,19 +4,22 @@ import useBranch from "@/hooks/use-branch";
 import {BranchListResponseSchema} from "@/types/schema";
 import BranchIndex from "@/components/layouts/branch-index";
 import {useState} from "react";
-import {branchDataTableAtom, format_paginated, gte_page_count} from "@/lib/utils";
-import {useAtom} from "jotai";
+import {branchDataTableAtom, branchesFilters, format_paginated, gte_page_count} from "@/lib/utils";
+import {useAtom, useAtomValue} from "jotai";
 
 const Page:NextPage = () => {
-    const [search, setSearch] = useState("")
+    const [search, setSearch] = useState<string>("")
     const [pagination, setPagination] = useAtom(branchDataTableAtom.pagination)
+    const filters = useAtomValue(branchesFilters.filters)
 
     const {isError, isLoading, data} = useBranch({
         queryName:"branch-list",
         enable: true,
         filters:{
+            ...filters,
             search,
-            page:format_paginated(pagination.pageIndex)
+            page:format_paginated(pagination.pageIndex),
+            page_size:String(pagination.pageSize)
         }
     })
 
@@ -27,7 +30,7 @@ const Page:NextPage = () => {
 
     if (!parse_data.success) return <>Error data parse</>
 
-    const page_count = gte_page_count(parse_data.data.count)
+    const page_count = gte_page_count(parse_data.data.count, pagination.pageSize)
 
     return (
         <BranchIndex
