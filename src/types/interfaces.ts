@@ -5,13 +5,13 @@ export interface HTTPRequestError<T> {
     error: T | T[];
 }
 
-export interface HTTPFilterRequest {
-    filters?: Record<string, string | string[]>;
+export interface HTTPFilterRequest<TFilter> {
+    filters?: Record<string, TFilter>;
 }
 
-export interface GenericHookProps {
+export interface GenericHookProps<TFilter> {
     id?: string;
-    filters?: Record<string, string | string[]>;
+    filters: HTTPFilterRequest<TFilter>["filters"];
     enable: boolean;
     queryName: string;
 }

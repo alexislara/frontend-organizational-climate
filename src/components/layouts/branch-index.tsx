@@ -1,14 +1,15 @@
 "use client"
 import {FunctionComponent} from "react";
-import {BranchList} from "@/types/types-schemas";
+import {CampaignList} from "@/types/types";
 import DataTable from "@/components/data-table";
-import columnsFunc from "@/components/layouts/data-table-columns/branch";
 import {useRouter} from "next/navigation";
 import HeaderIndex from "@/components/header-index";
 import {OnChangeFn, PaginationState} from "@tanstack/table-core";
+import {branchesFilters} from "@/lib/utils";
+import columnsFunc from "@/components/layouts/data-table-columns/campaign";
 
 interface BranchIndexProps {
-    data:BranchList[]
+    data: CampaignList[];
     setSearch: (value: string) => void;
     search: string;
     pageCount: number;
@@ -33,6 +34,7 @@ const BranchIndex:FunctionComponent<BranchIndexProps> = ({
                 text_route={"/branches/create"}
                 search_state={(value) => setSearch(value)}
                 search={search}
+                atom_filters={branchesFilters.filters}
             />
             <DataTable
                 columns={columnsFunc({push})}

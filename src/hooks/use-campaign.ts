@@ -1,9 +1,9 @@
 import {useQuery} from "@tanstack/react-query";
 import {GenericHookProps} from "@/types/interfaces";
-import {fetchBranch} from "@/lib/utils";
+import {fetchCampaign} from "@/lib/utils";
 import {keepPreviousData} from "@tanstack/query-core";
 
-const useBranch = <T,>({
+const useCampaign = <T,>({
     id,
     queryName,
     enable=false,
@@ -12,9 +12,9 @@ const useBranch = <T,>({
     return useQuery({
         queryKey:[queryName, filters, id],
         enabled: enable,
-        queryFn: async () => await fetchBranch.get({filters}),
+        queryFn: async () => await fetchCampaign.get({filters}),
         placeholderData: keepPreviousData,
     })
 }
 
-export default useBranch;
+export default useCampaign;

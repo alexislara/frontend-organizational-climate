@@ -1,17 +1,17 @@
 import {HTTPFilterRequest, HTTPRequestError} from "@/types/interfaces";
 
-interface PropsFetch<V> extends HTTPFilterRequest {
+interface PropsFetch<TFilter, V> extends HTTPFilterRequest<TFilter> {
     id?: string;
     method: "GET" | "POST" | "PUT" | "PATCH";
     body?: Record<string, V>;
 }
 
-type PropsMethod<V> = Omit<PropsFetch<V>, "method">
-type PropsHeader<V> = Omit<PropsFetch<V>, "method" | "filters" | "id">
+type PropsMethod<TFilter, V> = Omit<PropsFetch<TFilter, V>, "method">
+type PropsHeader<TFilter, V> = Omit<PropsFetch<TFilter, V>, "method" | "filters" | "id">
 type ReturnMethod<TData, TError> = Promise<TData | HTTPRequestError<TError> | undefined>
 
 
-class ApiFetch<TData, TError> {
+class ApiFetch<TData, TError, TFilter> {
     private readonly baseUrl: string;
     public readonly endpoint: string;
 
@@ -31,7 +31,7 @@ class ApiFetch<TData, TError> {
         }
     };
 
-    public get_headers = async <V>({body}:PropsHeader<V>):Promise<HeadersInit> => {
+    public get_headers = async <V>({body}:PropsHeader<TFilter, V>):Promise<HeadersInit> => {
         const token = await this.get_token()
 
         const headers: HeadersInit = {
@@ -54,7 +54,7 @@ class ApiFetch<TData, TError> {
         };
     }
 
-    public url_build = ({id, filters}:PropsMethod<unknown>):string => {
+    public url_build = ({id, filters}:PropsMethod<TFilter, unknown>):string => {
         const url_params =new URLSearchParams();
 
         let base_url = `${this.baseUrl}/${this.endpoint}/`;
@@ -69,12 +69,12 @@ class ApiFetch<TData, TError> {
         return `${base_url}?${url_params}`;
     }
 
-    private fetch_data = async <V>({
+    private fetch_data = async <V, TFilter>({
                                        id,
                                        method,
                                        body,
                                        filters
-                                   }:PropsFetch<V>):ReturnMethod<TData ,TError>  => {
+                                   }:PropsFetch<TFilter, V>):ReturnMethod<TData ,TError>  => {
         try {
             // fetch consumer api
             const response = await fetch(this.url_build({id, filters}), {
@@ -99,30 +99,30 @@ class ApiFetch<TData, TError> {
         }
     }
 
-    public get = async <V>({
+    public get = async <TFilter, V>({
                                id,
                                filters
-                           }:PropsMethod<V>):ReturnMethod<TData, TError> => {
+                           }:PropsMethod<TFilter, V>):ReturnMethod<TData, TError> => {
         return this.fetch_data({id, method:"GET", filters});
     };
 
     public post = async <V>({
                                 body
-                            }: PropsMethod<V>): ReturnMethod<TData, TError> => {
+                            }: PropsMethod<TFilter, V>): ReturnMethod<TData, TError> => {
         return this.fetch_data({method:"POST", body});
     };
 
     public put = async <V>({
                                id,
                                body
-                           }: PropsMethod<V>): ReturnMethod<TData, TError> => {
+                           }: PropsMethod<TFilter, V>): ReturnMethod<TData, TError> => {
         return this.fetch_data({id, method:"PUT", body});
     };
 
-    public patch = async <V>({
+    public patch = async <TFilter, V>({
                                  id,
                                  body
-                             }: PropsMethod<V>): ReturnMethod<TData, TError> => {
+                             }: PropsMethod<TFilter, V>): ReturnMethod<TData, TError> => {
         return this.fetch_data({id, method:"PATCH", body});
     };
 

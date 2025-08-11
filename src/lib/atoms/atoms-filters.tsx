@@ -1,12 +1,18 @@
 import {atom} from "jotai";
-import {GenericHookProps} from "@/types/interfaces";
 import {PrimitiveAtom} from "jotai/index";
 
-class AtomFilters {
-    filters: PrimitiveAtom<GenericHookProps["filters"]>;
 
-    constructor(filters: GenericHookProps["filters"]) {
+export interface AtomFiltersProps<T> {
+    filters: T
+}
+
+class AtomFilters<T> {
+    filters: PrimitiveAtom<AtomFiltersProps<T>["filters"]>;
+    default_filters: AtomFiltersProps<T>["filters"]
+
+    constructor(filters: AtomFiltersProps<T>["filters"]) {
         this.filters = atom(filters);
+        this.default_filters = filters;
     }
 
 }

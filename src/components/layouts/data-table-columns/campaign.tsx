@@ -2,7 +2,6 @@
 import { ColumnDef } from "@tanstack/react-table"
 import {MoreHorizontal} from "lucide-react"
 import {formatDate} from "@/lib/utils";
-import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-runtime";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Button} from "@/components/ui/button";
 import {
@@ -12,11 +11,10 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import {BranchList, ColumnsProps} from "@/types/types";
-
+import {CampaignList, ColumnsProps} from "@/types/types";
 
 const columnsFunc = ({push}:ColumnsProps) => {
-    const columns: ColumnDef<BranchList>[] = [
+    const columns: ColumnDef<CampaignList>[] = [
         {
             id: "select",
             header: ({ table }) => (
@@ -44,27 +42,10 @@ const columnsFunc = ({push}:ColumnsProps) => {
             enableHiding: false,
         },
         {
-            accessorKey: "users",
-            header: "Usuarios",
-            cell: ({ row }) => {
-                const data = row.original.users ?? []
-
-                return (
-                    <div className="text-right font-medium">
-                        {data.map((value, i) => (
-                            <div className="text-left font-medium" key={`user-${i}`}>
-                                {value}
-                            </div>
-                        ))}
-                    </div>
-                )
-            },
-        },
-        {
             accessorKey: "name",
             header: "Nombre de la sucursal",
             cell: ({ row }) => {
-                const data = row.original.name
+                const data = row.original.branch
 
                 return (
                     <div className="w-full">
@@ -89,6 +70,34 @@ const columnsFunc = ({push}:ColumnsProps) => {
             },
         },
         {
+            accessorKey: "period_start",
+            header: () => <div className={"text-wrap"}>Fecha de modificación</div>,
+            cell: ({ row }) => {
+                const data = row.original.period_start
+                const format = formatDate(data ?? "")
+
+                return (
+                    <div className="font-medium text-balance">
+                        {format}
+                    </div>
+                )
+            }
+        },
+        {
+            accessorKey: "period_end",
+            header: () => <div className={"text-wrap"}>Fecha de modificación</div>,
+            cell: ({ row }) => {
+                const data = row.original.period_end
+                const format = formatDate(data ?? "")
+
+                return (
+                    <div className="font-medium text-balance">
+                        {format}
+                    </div>
+                )
+            }
+        },
+        {
             accessorKey: "created",
             header: () => <div className={"text-wrap"}>Fecha de creacion</div>,
             cell: ({ row }) => {
@@ -106,7 +115,7 @@ const columnsFunc = ({push}:ColumnsProps) => {
             accessorKey: "modified",
             header: () => <div className={"text-wrap"}>Fecha de modificación</div>,
             cell: ({ row }) => {
-                const data = row.original.created
+                const data = row.original.modified
                 const format = formatDate(data ?? "")
 
                 return (

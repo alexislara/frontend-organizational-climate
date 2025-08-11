@@ -8,10 +8,8 @@ import { useSession } from "next-auth/react";
 import { Toaster } from "sonner";
 import NavBar from "@/components/nav-bar";
 import { usePathname } from "next/navigation";
-import FilterSideBar from "@/components/filter-sidebar";
 import {useAtom} from "jotai";
 import {open_filters} from "@/lib/atoms/global-atoms";
-import {PathnameFiltersSchema} from "@/types/schema";
 
 const ProvidersClient: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const [openFilter, setOpenFilter] = useAtom(open_filters)
@@ -38,18 +36,6 @@ const ProvidersClient: FunctionComponent<PropsWithChildren> = ({ children }) => 
                                 {children}
                             </main>
                         </div>
-                        <SidebarProvider
-                            defaultOpen={true}
-                            onOpenChange={setOpenFilter}
-                            open={openFilter}
-                            className={"w-0"}
-                        >
-                            <FilterSideBar
-                                open={openFilter}
-                                onClose={setOpenFilter}
-                                pathname={PathnameFiltersSchema.parse(split_pathname[1])}
-                            />
-                        </SidebarProvider>
                     </div>
                     <Toaster />
                 </SidebarProvider>

@@ -1,19 +1,20 @@
 "use client"
 import {NextPage} from "next";
 import useBranch from "@/hooks/use-branch";
-import {BranchListResponseSchema} from "@/types/schema";
+import {CampaignListResponseSchema} from "@/types/schema";
 import BranchIndex from "@/components/layouts/branch-index";
 import {useState} from "react";
 import {branchDataTableAtom, branchesFilters, format_paginated, gte_page_count} from "@/lib/utils";
 import {useAtom, useAtomValue} from "jotai";
+import useCampaign from "@/hooks/use-campaign";
 
 const Page:NextPage = () => {
     const [search, setSearch] = useState<string>("")
     const [pagination, setPagination] = useAtom(branchDataTableAtom.pagination)
     const filters = useAtomValue(branchesFilters.filters)
 
-    const {isError, isLoading, data} = useBranch({
-        queryName:"branch-list",
+    const {isError, isLoading, data} = useCampaign({
+        queryName:"campaign-list",
         enable: true,
         filters:{
             ...filters,
@@ -26,7 +27,7 @@ const Page:NextPage = () => {
     if (isLoading) return <>Loading...</>
     if (isError) return <>Error</>
 
-    const parse_data = BranchListResponseSchema.safeParse(data)
+    const parse_data = CampaignListResponseSchema.safeParse(data)
 
     if (!parse_data.success) return <>Error data parse</>
 

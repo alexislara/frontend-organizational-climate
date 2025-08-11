@@ -11,21 +11,45 @@ import {
     SheetTrigger
 } from "./ui/sheet"
 import { Button } from "@/components/ui/button"
-import {FunctionComponent, PropsWithChildren} from "react"
+import {useMemo} from "react"
 import AtomsFilters from "@/lib/atoms/atoms-filters";
 import {useAtom} from "jotai";
+import {ListFilter} from "lucide-react";
+import BranchContent from "@/components/layouts/sheet-filters/branch-content";
+import {PathnameFilters} from "@/types/types";
 
-interface SheetFiltersProps {
-    atom_filters: AtomsFilters["filters"]
+interface SheetFiltersProps<T> {
+    atom_filters: AtomsFilters<T>
+    pathname: PathnameFilters;
 }
 
-const SheetFilters: FunctionComponent<PropsWithChildren<SheetFiltersProps>> = ({children, atom_filters}) => {
-    const [filters, setFilters] = useAtom(atom_filters)
+const SheetContentFilters = {
+    "": {
+        content: () => (<>Foobar</>)
+    },
+    "branches": {content: BranchContent},
+    "users": {content: BranchContent},
+    "action-plans": {content: BranchContent},
+    "evidences": {content: BranchContent},
+}
+
+const SheetFilters = <T,>({pathname, atom_filters}: SheetFiltersProps<T>) => {
+    const [, setFilters] = useAtom(atom_filters.filters)
+
+    const MemoContent = useMemo(() => {
+        return SheetContentFilters[pathname].content
+    }, [pathname])
 
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant="outline">Filtros</Button>
+                <Button
+                    variant="outline"
+                    size={"sm"}
+                >
+                    <ListFilter strokeWidth={2.25} className={"ml-[-6px]"} />
+                    <span>Filtros</span>
+                </Button>
             </SheetTrigger>
             <SheetContent>
                 <SheetHeader>
@@ -34,17 +58,14 @@ const SheetFilters: FunctionComponent<PropsWithChildren<SheetFiltersProps>> = ({
                         Ajusta los criterios para refinar los resultados.
                     </SheetDescription>
                 </SheetHeader>
-                <div className="grid flex-1 auto-rows-min gap-6 px-4 py-4">
-                    {children}
+                <div className="grid flex-1 auto-rows-min list-none gap-6 px-4 py-4">
+                    <MemoContent />
                 </div>
                 <SheetFooter>
                     <Button
-                        onClick={() => setFilters((filters) => ({
-                                ...filters
-                            })
-                        )}
+                        onClick={() => setFilters(atom_filters.default_filters)}
                     >
-                        Aplicar filtros
+                        Quitar Filtros
                     </Button>
                     <SheetClose asChild>
                         <Button variant="outline">Cerrar</Button>

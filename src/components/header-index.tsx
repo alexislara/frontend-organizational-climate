@@ -1,29 +1,32 @@
 "use client"
 import {Input} from "@/components/ui/input";
-import {ListFilter, Plus, Search} from "lucide-react";
+import {Plus, Search} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {usePathname, useRouter} from "next/navigation";
-import {FunctionComponent, useEffect, useMemo} from "react";
-import {useAtom} from "jotai/index";
-import {open_filters} from "@/lib/atoms/global-atoms";
 import SheetFilters from "@/components/sheet-filters";
+import {branchesFilters} from "@/lib/utils";
+import {PathnameFiltersSchema} from "@/types/schema";
+import AtomsFilters, {AtomFiltersProps} from "@/lib/atoms/atoms-filters";
 
-interface HeaderProps {
+interface HeaderProps<T> {
     text_button: string;
     text_route: string;
     search: string;
     search_state: (value:string) => void;
+    atom_filters: AtomsFilters<T>["filters"]
 }
 
-const HeaderIndex:FunctionComponent<HeaderProps> = ({
+
+const HeaderIndex = <T,>({
     text_button,
     text_route,
     search,
     search_state,
-}: HeaderProps) => {
+
+}: HeaderProps<T>) => {
     const {push} = useRouter()
     const pathname = usePathname();
-    
+    const pathname_split = pathname.split("/")
 
     return (
         <nav className={"flex items-center bg-card border rounded-[10px] p-2 justify-between"}>
@@ -41,17 +44,10 @@ const HeaderIndex:FunctionComponent<HeaderProps> = ({
                 />
             </div>
             <div className={"space-x-2"}>
-                {/*<Button*/}
-                {/*    variant={"outline"}*/}
-                {/*    size={"sm"}*/}
-                {/*    onClick={() => setOpenFilter(!openFilter)}*/}
-                {/*>*/}
-                {/*    <ListFilter strokeWidth={2.25} className={"ml-[-6px]"} />*/}
-                {/*    <span>Filtros</span>*/}
-                {/*</Button>*/}
-                <SheetFilters>
-
-                </SheetFilters>
+                <SheetFilters
+                    atom_filters={branchesFilters}
+                    pathname={PathnameFiltersSchema.parse(pathname_split[1])}
+                />
                 <Button
                     variant={"outline"}
                     size={"sm"}

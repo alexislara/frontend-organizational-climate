@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import ApiFetch from "@/lib/api-fetch";
-import {BranchResponse} from "@/types/types-schemas";
+import {BranchFilters, BranchResponse, CampaignListResponse} from "@/types/types";
 import {HTTPRequestError} from "@/types/interfaces";
 import AtomsDataTable from "@/lib/atoms/atoms-data-table";
 import AtomFilters from "@/lib/atoms/atoms-filters";
@@ -35,11 +35,24 @@ export const LOGOUT_URL = `${process.env.NEXT_PUBLIC_SERVER_ECO_URL ?? "http://l
 
 const url_base = process.env.NEXT_PUBLIC_SERVER_ECO_URL ?? "http://localhost:8000";
 
-export const fetchBranch = new ApiFetch<BranchResponse, HTTPRequestError<string[]>>({
+
+// Branches section
+export const fetchBranch = new ApiFetch<
+    BranchResponse,
+    HTTPRequestError<string[]>,
+    BranchFilters
+>({
   url:url_base,
   endpoint:"v1/branch",
 });
 
+export const branchesFilters = new AtomFilters<BranchFilters>({
+  period_start:undefined,
+  period_end:undefined,
+  status:undefined,
+  page:0,
+  page_size:20,
+})
 
 export const branchDataTableAtom = new AtomsDataTable({
   pagination:{
@@ -48,7 +61,32 @@ export const branchDataTableAtom = new AtomsDataTable({
   }
 });
 
-export const branchesFilters = new AtomFilters({})
+// Campaign section
+export const fetchCampaign = new ApiFetch<
+    CampaignListResponse,
+    HTTPRequestError<string[]>,
+    BranchFilters
+>({
+  url:url_base,
+  endpoint:"v1/campaign",
+});
+
+export const campaignFilters = new AtomFilters<BranchFilters>({
+  period_start:undefined,
+  period_end:undefined,
+  status:undefined,
+  page:0,
+  page_size:20,
+})
+
+export const campaignDataTableAtom = new AtomsDataTable({
+  pagination:{
+    pageIndex:0,
+    pageSize:20
+  }
+});
+
+
 export const usersFilters = new AtomFilters({})
 export const actionPlansFilters = new AtomFilters({})
 export const evidencesFilters = new AtomFilters({})

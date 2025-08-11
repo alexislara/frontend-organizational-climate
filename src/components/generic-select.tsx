@@ -1,5 +1,6 @@
 "use client"
-import {FunctionComponent} from "react";
+
+import { FunctionComponent } from "react"
 import {
     Select,
     SelectContent,
@@ -8,39 +9,50 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue
-} from "@/components/ui/select";
-import {Label} from "@/components/ui/label";
+} from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
 
 type DataContent = {
-    title_content: string;
+    title_content: string
     content: {
-        key: string;
-        value: string;
-    }[];
+        key: string
+        value: string
+    }[]
 }
 
 interface SelectProps {
-    title: string;
-    data: DataContent[];
+    title: string
+    data: DataContent[]
+    value?: string
+    defaultValue?: string
+    onValueChange: (value?: string) => void
 }
 
-const GenericSelect:FunctionComponent<SelectProps> = ({title, data}) => {
+const GenericSelect: FunctionComponent<SelectProps> = ({
+   title,
+   data,
+   value,
+   defaultValue,
+   onValueChange
+}) => {
     return (
-        <div className={"flex flex-col gap-3 w-full"}>
-            <Label htmlFor="date" className="px-1">
-                {title ?? "Date of birth"}
+        <div className="flex flex-col gap-3">
+            <Label className="px-1">
+                {title ?? "None name"}
             </Label>
-            <Select>
+            <Select
+                value={value}
+                defaultValue={defaultValue}
+                onValueChange={onValueChange}
+            >
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder={title} />
                 </SelectTrigger>
                 <SelectContent>
-                    {data.map(({title_content, content}, index) => (
+                    {data.map(({ title_content, content }, index) => (
                         <SelectGroup key={`${title}-${index}-item`}>
-                            <SelectLabel>
-                                {title_content}
-                            </SelectLabel>
-                            {content.map(({key, value}, index) => (
+                            <SelectLabel>{title_content}</SelectLabel>
+                            {content.map(({ key, value }, index) => (
                                 <SelectItem
                                     key={`${key}-${value}-${index}-item`}
                                     value={value}
@@ -56,4 +68,4 @@ const GenericSelect:FunctionComponent<SelectProps> = ({title, data}) => {
     )
 }
 
-export default GenericSelect;
+export default GenericSelect
