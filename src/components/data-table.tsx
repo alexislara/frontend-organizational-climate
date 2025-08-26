@@ -115,7 +115,7 @@ const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination }: 
 
     return (
         <div className="w-full mt-2 rounded-md">
-            <div className="rounded-md border overflow-x-auto h-[calc(100vh-190px)]">
+            <div className="border overflow-x-auto h-[calc(100vh-190px)]">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -161,7 +161,7 @@ const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination }: 
                     </TableBody>
                 </Table>
             </div>
-            <div className="flex items-center justify-between border rounded-md p-2 bg-card my-2">
+            <div className="flex items-center justify-between border rounded-b-md p-2 bg-card my-2">
                 <Select
                     defaultValue={"20"}
                     onValueChange={(select_value) => {

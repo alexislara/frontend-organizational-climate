@@ -1,6 +1,6 @@
 "use client"
 import { ColumnDef } from "@tanstack/react-table"
-import {MoreHorizontal} from "lucide-react"
+import {ArrowDown01, ArrowDownZA, CalendarArrowDown, MoreHorizontal} from "lucide-react"
 import {formatDate} from "@/lib/utils";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Button} from "@/components/ui/button";
@@ -43,7 +43,16 @@ const columnsFunc = ({push}:ColumnsProps) => {
         },
         {
             accessorKey: "name",
-            header: "Nombre de la sucursal",
+            header: () => (
+                <Button
+                    variant={"ghost"}
+                    onClick={() => {}}
+                    size={"sm"}
+                >
+                    <ArrowDownZA />
+                    Nombre de la sucursal
+                </Button>
+            ),
             cell: ({ row }) => {
                 const data = row.original.branch
 
@@ -51,13 +60,21 @@ const columnsFunc = ({push}:ColumnsProps) => {
                     <div className="w-full">
                         <p className={"capitalize text-balance w-40"}>{data}</p>
                     </div>
-
                 )
             },
         },
         {
             accessorKey: "commercial_distributor",
-            header: "Distribuidor comercial",
+            header: () => (
+                <Button
+                    variant={"ghost"}
+                    onClick={() => {}}
+                    size={"sm"}
+                >
+                    <ArrowDownZA />
+                    Distribuidor comercial
+                </Button>
+            ),
             cell: ({ row }) => {
                 const data = row.original.commercial_distributor
 
@@ -70,8 +87,35 @@ const columnsFunc = ({push}:ColumnsProps) => {
             },
         },
         {
+            accessorKey: "user_amount",
+            header: () => (
+                <Button
+                    variant={"ghost"}
+                    onClick={() => {}}
+                    size={"sm"}
+                >
+                    <ArrowDown01 />
+                    Cantidad de usuarios
+                </Button>
+            ),
+            cell: ({ row }) => {
+                const data = row.original.user_amount
+
+                return <span className={"flex justify-center items-center"}>{data}</span>
+            }
+        },
+        {
             accessorKey: "period_start",
-            header: () => <div className={"text-wrap"}>Fecha de modificación</div>,
+            header: () => (
+                <Button
+                    variant={"ghost"}
+                    onClick={() => {}}
+                    size={"sm"}
+                >
+                    <CalendarArrowDown />
+                    Inicio del período
+                </Button>
+            ),
             cell: ({ row }) => {
                 const data = row.original.period_start
                 const format = formatDate(data ?? "")
@@ -85,7 +129,16 @@ const columnsFunc = ({push}:ColumnsProps) => {
         },
         {
             accessorKey: "period_end",
-            header: () => <div className={"text-wrap"}>Fecha de modificación</div>,
+            header: () => (
+                <Button
+                    variant={"ghost"}
+                    onClick={() => {}}
+                    size={"sm"}
+                >
+                    <CalendarArrowDown />
+                    Fin del periodo
+                </Button>
+            ),
             cell: ({ row }) => {
                 const data = row.original.period_end
                 const format = formatDate(data ?? "")
@@ -97,34 +150,52 @@ const columnsFunc = ({push}:ColumnsProps) => {
                 )
             }
         },
-        {
-            accessorKey: "created",
-            header: () => <div className={"text-wrap"}>Fecha de creacion</div>,
-            cell: ({ row }) => {
-                const data = row.original.created
-                const format = formatDate(data ?? "")
-
-                return (
-                    <div className="font-medium text-balance">
-                        {format}
-                    </div>
-                )
-            }
-        },
-        {
-            accessorKey: "modified",
-            header: () => <div className={"text-wrap"}>Fecha de modificación</div>,
-            cell: ({ row }) => {
-                const data = row.original.modified
-                const format = formatDate(data ?? "")
-
-                return (
-                    <div className="font-medium text-balance">
-                        {format}
-                    </div>
-                )
-            }
-        },
+        // {
+        //     accessorKey: "created",
+        //     header: () => (
+        //         <Button
+        //             variant={"ghost"}
+        //             onClick={() => {}}
+        //             size={"sm"}
+        //         >
+        //             <CalendarArrowDown />
+        //             Fecha de creacion
+        //         </Button>
+        //     ),
+        //     cell: ({ row }) => {
+        //         const data = row.original.created
+        //         const format = formatDate(data ?? "")
+        //
+        //         return (
+        //             <div>
+        //                 {format}
+        //             </div>
+        //         )
+        //     }
+        // },
+        // {
+        //     accessorKey: "modified",
+        //     header: () => (
+        //         <Button
+        //             variant={"ghost"}
+        //             onClick={() => {}}
+        //             size={"sm"}
+        //         >
+        //             <CalendarArrowDown />
+        //             Fecha de modificación
+        //         </Button>
+        //     ),
+        //     cell: ({ row }) => {
+        //         const data = row.original.modified
+        //         const format = formatDate(data ?? "")
+        //
+        //         return (
+        //             <div className="font-medium text-balance">
+        //                 {format}
+        //             </div>
+        //         )
+        //     }
+        // },
         {
             id: "actions",
             enableHiding: false,

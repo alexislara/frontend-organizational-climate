@@ -21,6 +21,13 @@ export const BranchListSchema = BaseDataListSchema.extend({
     users: z.array(z.string()),
     manual_flow: z.boolean(),
 })
+
+export const BranchSchema = z.object({
+    name: z.string(),
+    commercial_distributor_id: z.string(),
+    // users: z.array(z.string()),
+})
+
 export const CampaignListSchema = BaseDataListSchema.extend({
     commercial_distributor: z.string(),
     branch: z.string(),
@@ -29,6 +36,23 @@ export const CampaignListSchema = BaseDataListSchema.extend({
     user_amount: z.number(),
     enabled: z.boolean(),
     completed: z.boolean(),
+})
+
+export const CampaignSchema = z.object({
+    user_amount: z.number(),
+    commercial_distributor_id: z.string(),
+    branch_id: z.string(),
+})
+
+
+export const CommercialDistributorSchema = z.object({
+    id: z.string(),
+    name: z.string(),
+    region: z.string(),
+    zone: z.string(),
+    users: z.array(z.string()),
+    created: z.string(),
+    modified: z.string()
 })
 
 
@@ -43,3 +67,4 @@ export const PathnameFiltersSchema = z.union([
 // type list response
 export const BranchListResponseSchema = PaginatedResponseSchema(BranchListSchema)
 export const CampaignListResponseSchema = PaginatedResponseSchema(CampaignListSchema)
+export const CommercialDistributorListResponseSchema = PaginatedResponseSchema(CommercialDistributorSchema)

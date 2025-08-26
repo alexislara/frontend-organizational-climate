@@ -1,52 +1,60 @@
-"use client"
-
-import { ChevronDownIcon } from "lucide-react"
-
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
+import { DateRange } from "react-day-picker"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
-import { Label } from "@/components/ui/label"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
-import {FunctionComponent, useState} from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import {FunctionComponent, HTMLAttributes, useState} from "react"
 
-interface DatePickerProps {
-    date?: Date
-    setDate: (value: Date | undefined) => void
-    title?:string;
-    sub_title?:string;
+interface DatePickerWithRangeProps {
+    date?: DateRange
+    setDate: (value?: DateRange) => void
 }
 
-const DatePicker:FunctionComponent<DatePickerProps> = ({date, setDate, title, sub_title}) => {
-    const [open, setOpen] = useState(false)
+const DatePickerWithRange: FunctionComponent<
+    HTMLAttributes<HTMLDivElement> & DatePickerWithRangeProps
+> = ({ className, date, setDate }) => {
+   const [dateRange, setDateRange] = useState<DateRange | undefined>(date)
 
     return (
-        <div className="flex flex-col gap-3 w-full">
-            <Label htmlFor="date" className="px-1">
-                {title ?? "Date of birth"}
-            </Label>
-            <Popover open={open} onOpenChange={setOpen} >
+        <div className={cn("grid gap-2 mx-4", className)}>
+            <Popover>
                 <PopoverTrigger asChild>
                     <Button
-                        variant="outline"
                         id="date"
-                        className="w-full justify-between font-normal"
+                        variant={"outline"}
+                        className={cn(
+                            "w-[300px] justify-start text-left font-normal",
+                            !dateRange?.from && "text-muted-foreground"
+                        )}
                     >
-                        {date ? date.toLocaleDateString() : sub_title ?? "Select date"}
-                        <ChevronDownIcon />
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {dateRange?.from ? (
+                            dateRange.to ? (
+                                <>
+                                    {format(dateRange.from, "LLL dd, y")} -{" "}
+                                    {format(dateRange.to, "LLL dd, y")}
+                                </>
+                            ) : (
+                                format(dateRange.from, "LLL dd, y")
+                            )
+                        ) : (
+                            <span>Pick a date</span>
+                        )}
                     </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto overflow-hidden p-0" align="end">
+                <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
-                        mode="single"
-                        selected={date}
-                        captionLayout="dropdown"
-                        onSelect={(date) => {
-                            setDate(date)
-                            setOpen(false)
+                        mode="range"
+                        defaultMonth={dateRange?.from}
+                        selected={dateRange}
+                        onSelect={(range) => {
+                            setDate(range)
+                            setDateRange(range)
                         }}
+
+                        numberOfMonths={2}
                     />
                 </PopoverContent>
             </Popover>
@@ -54,4 +62,4 @@ const DatePicker:FunctionComponent<DatePickerProps> = ({date, setDate, title, su
     )
 }
 
-export default DatePicker;
+export default DatePickerWithRange

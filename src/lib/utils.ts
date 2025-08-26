@@ -47,9 +47,8 @@ export const fetchBranch = new ApiFetch<
 });
 
 export const branchesFilters = new AtomFilters<BranchFilters>({
-  period_start:undefined,
-  period_end:undefined,
-  status:undefined,
+  enabled:undefined,
+  completed:undefined,
   page:0,
   page_size:20,
 })
@@ -72,9 +71,6 @@ export const fetchCampaign = new ApiFetch<
 });
 
 export const campaignFilters = new AtomFilters<BranchFilters>({
-  period_start:undefined,
-  period_end:undefined,
-  status:undefined,
   page:0,
   page_size:20,
 })
@@ -85,6 +81,30 @@ export const campaignDataTableAtom = new AtomsDataTable({
     pageSize:20
   }
 });
+
+
+// Commercial distributor section
+export const fetchCommercialDistributor = new ApiFetch<
+    CampaignListResponse,
+    HTTPRequestError<string[]>,
+    BranchFilters
+>({
+  url:url_base,
+  endpoint:"v1/commercial-distributor",
+});
+
+export const commercialDistributorFilters = new AtomFilters<BranchFilters>({
+  page:0,
+  page_size:20,
+})
+
+export const commercialDistributorDataTableAtom = new AtomsDataTable({
+  pagination:{
+    pageIndex:0,
+    pageSize:20
+  }
+});
+
 
 
 export const usersFilters = new AtomFilters({})

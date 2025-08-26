@@ -28,11 +28,11 @@ const ProvidersClient: FunctionComponent<PropsWithChildren> = ({ children }) => 
             {status === "authenticated" && (
                 <SidebarProvider>
                     {split_pathname.length <= 2 && <AppSidebar />}
-                    <div className="flex h-screen w-full overflow-hidden">
+                    <div className="flex h-full w-full overflow-hidden">
                         <div className="flex flex-col w-full">
                             <NavBar pathname={split_pathname} />
                             <div className={`${openFilter ? "blur-xs bg-card/40 z-10 fixed h-full w-full": ""}`} />
-                            <main className="flex flex-col m-2 ">
+                            <main className="flex flex-col m-2">
                                 {children}
                             </main>
                         </div>

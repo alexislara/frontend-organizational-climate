@@ -54,7 +54,7 @@ class ApiFetch<TData, TError, TFilter> {
         };
     }
 
-    public url_build = ({id, filters}:PropsMethod<TFilter, unknown>):string => {
+    public url_build = <V> ({id, filters}:PropsMethod<V, TFilter>):string => {
         const url_params =new URLSearchParams();
 
         let base_url = `${this.baseUrl}/${this.endpoint}/`;
@@ -69,12 +69,12 @@ class ApiFetch<TData, TError, TFilter> {
         return `${base_url}?${url_params}`;
     }
 
-    private fetch_data = async <V, TFilter>({
-                                       id,
-                                       method,
-                                       body,
-                                       filters
-                                   }:PropsFetch<TFilter, V>):ReturnMethod<TData ,TError>  => {
+    private fetch_data = async <TFilter, V>({
+        id,
+        method,
+        body,
+        filters
+    }:PropsFetch<TFilter, V>):ReturnMethod<TData ,TError>  => {
         try {
             // fetch consumer api
             const response = await fetch(this.url_build({id, filters}), {

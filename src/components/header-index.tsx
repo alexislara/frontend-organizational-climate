@@ -6,7 +6,7 @@ import {usePathname, useRouter} from "next/navigation";
 import SheetFilters from "@/components/sheet-filters";
 import {branchesFilters} from "@/lib/utils";
 import {PathnameFiltersSchema} from "@/types/schema";
-import AtomsFilters, {AtomFiltersProps} from "@/lib/atoms/atoms-filters";
+import AtomsFilters from "@/lib/atoms/atoms-filters";
 
 interface HeaderProps<T> {
     text_button: string;
@@ -29,7 +29,7 @@ const HeaderIndex = <T,>({
     const pathname_split = pathname.split("/")
 
     return (
-        <nav className={"flex items-center bg-card border rounded-[10px] p-2 justify-between"}>
+        <nav className={"flex items-center bg-card border rounded-t-md p-2 justify-between"}>
             <div className={"static flex items-center w-[35%]"}>
                 <Input
                     className={"pl-8"}
