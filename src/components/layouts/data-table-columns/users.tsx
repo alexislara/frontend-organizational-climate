@@ -11,7 +11,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import {CampaignList, ColumnsProps, ReportsListType} from "@/types/types";
+import {CampaignList, ColumnsProps} from "@/types/types";
 
 const columnsFunc = ({push}:ColumnsProps) => {
     const columns: ColumnDef<CampaignList>[] = [
@@ -42,6 +42,28 @@ const columnsFunc = ({push}:ColumnsProps) => {
             enableHiding: false,
         },
         {
+            accessorKey: "name",
+            header: () => (
+                <Button
+                    variant={"ghost"}
+                    onClick={() => {}}
+                    size={"sm"}
+                >
+                    <ArrowDownZA />
+                    Nombre de la sucursal
+                </Button>
+            ),
+            cell: ({ row }) => {
+                const data = row.original.branch
+
+                return (
+                    <div className="w-full">
+                        <p className={"capitalize text-balance w-40"}>{data}</p>
+                    </div>
+                )
+            },
+        },
+        {
             accessorKey: "commercial_distributor",
             header: () => (
                 <Button
@@ -65,28 +87,6 @@ const columnsFunc = ({push}:ColumnsProps) => {
             },
         },
         {
-            accessorKey: "name",
-            header: () => (
-                <Button
-                    variant={"ghost"}
-                    onClick={() => {}}
-                    size={"sm"}
-                >
-                    <ArrowDownZA />
-                    Nombre de la sucursal
-                </Button>
-            ),
-            cell: ({ row }) => {
-                const data = row.original.branch
-
-                return (
-                    <div className="w-full">
-                        <p className={"capitalize text-balance w-40"}>{data}</p>
-                    </div>
-                )
-            },
-        },
-        {
             accessorKey: "user_amount",
             header: () => (
                 <Button
@@ -95,7 +95,7 @@ const columnsFunc = ({push}:ColumnsProps) => {
                     size={"sm"}
                 >
                     <ArrowDown01 />
-                    Usuarios por sucursal
+                    Cantidad de usuarios
                 </Button>
             ),
             cell: ({ row }) => {
@@ -128,7 +128,7 @@ const columnsFunc = ({push}:ColumnsProps) => {
             }
         },
         {
-            accessorKey: "created",
+            accessorKey: "period_end",
             header: () => (
                 <Button
                     variant={"ghost"}
@@ -136,15 +136,15 @@ const columnsFunc = ({push}:ColumnsProps) => {
                     size={"sm"}
                 >
                     <CalendarArrowDown />
-                    Fecha de creacion
+                    Fin del periodo
                 </Button>
             ),
             cell: ({ row }) => {
-                const data = row.original.created
+                const data = row.original.period_end
                 const format = formatDate(data ?? "")
 
                 return (
-                    <div>
+                    <div className="font-medium text-balance">
                         {format}
                     </div>
                 )

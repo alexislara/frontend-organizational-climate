@@ -14,6 +14,7 @@ interface HeaderProps<T> {
     search: string;
     search_state: (value:string) => void;
     atom_filters: AtomsFilters<T>["filters"]
+    hidden_button_create?: boolean | false;
 }
 
 
@@ -22,7 +23,7 @@ const HeaderIndex = <T,>({
     text_route,
     search,
     search_state,
-
+    hidden_button_create,
 }: HeaderProps<T>) => {
     const {push} = useRouter()
     const pathname = usePathname();
@@ -52,6 +53,7 @@ const HeaderIndex = <T,>({
                     variant={"outline"}
                     size={"sm"}
                     onClick={() => push(text_route ?? "/")}
+                    hidden={hidden_button_create}
                 >
                     <Plus strokeWidth={2.25} className={"ml-[-6px]"} />
                     <span>{text_button ?? "sin titulo"}</span>

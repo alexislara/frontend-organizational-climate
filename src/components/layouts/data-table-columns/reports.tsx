@@ -1,9 +1,9 @@
 "use client"
 import { ColumnDef } from "@tanstack/react-table"
-import {ArrowDown01, ArrowDownZA, CalendarArrowDown, MoreHorizontal} from "lucide-react"
-import {formatDate} from "@/lib/utils";
-import {Checkbox} from "@/components/ui/checkbox";
-import {Button} from "@/components/ui/button";
+import { ArrowDown01, ArrowDownZA, CalendarArrowDown, MoreHorizontal } from "lucide-react"
+import { formatDate } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -11,10 +11,11 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import {CampaignList, ColumnsProps, ReportsListType} from "@/types/types";
+import { ColumnsProps, ReportsListType } from "@/types/types";
+import DrawerDataTableUsers from "@/components/drawer-data-table.users";
 
-const columnsFunc = ({push}:ColumnsProps) => {
-    const columns: ColumnDef<CampaignList>[] = [
+const columnsFunc = ({ push }: ColumnsProps) => {
+    const columns: ColumnDef<ReportsListType>[] = [
         {
             id: "select",
             header: ({ table }) => (
@@ -46,7 +47,7 @@ const columnsFunc = ({push}:ColumnsProps) => {
             header: () => (
                 <Button
                     variant={"ghost"}
-                    onClick={() => {}}
+                    onClick={() => { }}
                     size={"sm"}
                 >
                     <ArrowDownZA />
@@ -69,7 +70,7 @@ const columnsFunc = ({push}:ColumnsProps) => {
             header: () => (
                 <Button
                     variant={"ghost"}
-                    onClick={() => {}}
+                    onClick={() => { }}
                     size={"sm"}
                 >
                     <ArrowDownZA />
@@ -91,17 +92,17 @@ const columnsFunc = ({push}:ColumnsProps) => {
             header: () => (
                 <Button
                     variant={"ghost"}
-                    onClick={() => {}}
+                    onClick={() => { }}
                     size={"sm"}
                 >
                     <ArrowDown01 />
-                    Usuarios por sucursal
+                    Encuestas contestadas
                 </Button>
             ),
             cell: ({ row }) => {
-                const data = row.original.user_amount
+                const { user_amount, surveys_answered } = row.original
 
-                return <span className={"flex justify-center items-center"}>{data}</span>
+                return <span className={"flex justify-center items-center"}>{surveys_answered}/{user_amount}</span>
             }
         },
         {
@@ -109,7 +110,7 @@ const columnsFunc = ({push}:ColumnsProps) => {
             header: () => (
                 <Button
                     variant={"ghost"}
-                    onClick={() => {}}
+                    onClick={() => { }}
                     size={"sm"}
                 >
                     <CalendarArrowDown />
@@ -128,23 +129,23 @@ const columnsFunc = ({push}:ColumnsProps) => {
             }
         },
         {
-            accessorKey: "created",
+            accessorKey: "period_end",
             header: () => (
                 <Button
                     variant={"ghost"}
-                    onClick={() => {}}
+                    onClick={() => { }}
                     size={"sm"}
                 >
                     <CalendarArrowDown />
-                    Fecha de creacion
+                    Fin del periodo
                 </Button>
             ),
             cell: ({ row }) => {
-                const data = row.original.created
+                const data = row.original.period_end
                 const format = formatDate(data ?? "")
 
                 return (
-                    <div>
+                    <div className="font-medium text-balance">
                         {format}
                     </div>
                 )
@@ -171,7 +172,9 @@ const columnsFunc = ({push}:ColumnsProps) => {
                             >
                                 Editar sucursal
                             </DropdownMenuItem>
-                            <DropdownMenuItem>View payment details</DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <DrawerDataTableUsers />
+                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )

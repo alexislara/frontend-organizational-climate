@@ -16,9 +16,10 @@ const Page = () => {
                             <div className="mb-6 lg:mb-10">
                                 <div className="bg-white p-2 w-14 h-14 lg:w-16 lg:h-16 rounded-xl shadow-xl transition-all duration-200 flex items-center justify-center">
                                     <Image
-                                        src="/img/lth-logo.png"
-                                        height={50}
-                                        width={50}
+                                        src={"/img/lth-logo.png"}
+                                        height={70}
+                                        width={70}
+                                        style={{ height: "auto" }}
                                         alt="LTH Logo"
                                     />
                                 </div>

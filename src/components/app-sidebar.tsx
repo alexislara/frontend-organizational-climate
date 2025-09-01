@@ -1,6 +1,6 @@
 "use client"
 import {
-    FileArchive,
+    FileArchive, FileChartPie,
     Home,
     NotepadText,
     Sheet,
@@ -55,6 +55,11 @@ const items = [
         icon: UsersRound,
     },
     {
+        title: "Reportes",
+        url: "/reports",
+        icon: FileChartPie,
+    },
+    {
         title: "Planes de acción",
         url: "/action-plans",
         icon: NotepadText,
@@ -69,7 +74,7 @@ const items = [
 const AppSidebar:FunctionComponent = () => {
     const {push} = useRouter()
     const {open} = useSidebar()
-    const [openFilter, setOpenFilter] = useAtom(open_filters)
+    const [, setOpenFilter] = useAtom(open_filters)
 
     return (
         <Sidebar collapsible={"icon"}>
@@ -77,9 +82,9 @@ const AppSidebar:FunctionComponent = () => {
                 <SidebarMenuButton className={"flex items-center"}>
                     <Image
                         src={"/img/lth-logo.png"}
+                        alt="Logo"
+                        width={40}
                         height={50}
-                        width={50}
-                        alt={""}
                     />
                     <h1 className={"font-bold capitalize"}>
                         CLIMA ORGANIZACIONAL
@@ -119,7 +124,7 @@ const AppSidebar:FunctionComponent = () => {
                             <DropdownMenuTrigger asChild>
                                 <SidebarMenuButton className={`w-full transition-[width] duration-200 ease-linear flex items-center ${open ? "foobar":"justify-center"} gap-3 px-1 py-5 rounded-lg hover:bg-muted/50`}>
                                     <Avatar className="h-8 w-8">
-                                        <AvatarImage src={"https://github.com/shadcn.png"} />
+                                        <AvatarImage src={""} />
                                         <AvatarFallback>{`${"sin nombre"}`.charAt(0)}</AvatarFallback>
                                     </Avatar>
                                     <div className={`flex flex-col items-start ${open ? "" : "hidden"}`}>

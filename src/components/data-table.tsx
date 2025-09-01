@@ -46,6 +46,7 @@ interface DataTableProps<T> {
     pagination: PaginationState;
     setPagination:OnChangeFn<PaginationState>;
     pageCount: number;
+    full_screen: boolean | true;
 }
 
 
@@ -54,7 +55,7 @@ const generatePages = (current: number, end: number): number[] => {
     return [current, ...generatePages(current + 1, end)];
 };
 
-const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination }: DataTableProps<T>) => {
+const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination, full_screen=true }: DataTableProps<T>) => {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -114,8 +115,8 @@ const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination }: 
     };
 
     return (
-        <div className="w-full mt-2 rounded-md">
-            <div className="border overflow-x-auto h-[calc(100vh-190px)]">
+        <div className="w-full rounded-md">
+            <div className={`border overflow-x-auto ${full_screen ? "h-[calc(100vh-180px)]": "h-full"}`}>
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -152,7 +153,7 @@ const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination }: 
                             <TableRow>
                                 <TableCell
                                     colSpan={columns.length}
-                                    className="h-[calc(100vh-232px)] text-center"
+                                    className="h-[calc(100vh-222px)] text-center"
                                 >
                                     No results.
                                 </TableCell>
@@ -161,7 +162,7 @@ const DataTable = <T,>({ data, columns, pagination, pageCount, setPagination }: 
                     </TableBody>
                 </Table>
             </div>
-            <div className="flex items-center justify-between border rounded-b-md p-2 bg-card my-2">
+            <div className="flex items-center justify-between border rounded-b-md p-2 bg-card ">
                 <Select
                     defaultValue={"20"}
                     onValueChange={(select_value) => {

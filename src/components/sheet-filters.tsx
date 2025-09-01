@@ -29,6 +29,7 @@ const SheetContentFilters = {
     },
     "branches": {content: BranchContent},
     "users": {content: BranchContent},
+    "reports": {content: () => <>Foobar</>},
     "action-plans": {content: BranchContent},
     "evidences": {content: BranchContent},
 }
